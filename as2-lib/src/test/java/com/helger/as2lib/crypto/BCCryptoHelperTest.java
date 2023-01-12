@@ -32,22 +32,6 @@
  */
 package com.helger.as2lib.crypto;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
-import java.nio.charset.StandardCharsets;
-import java.security.GeneralSecurityException;
-import java.security.KeyStore;
-import java.security.KeyStore.PrivateKeyEntry;
-import java.security.cert.CertificateException;
-import java.security.cert.X509Certificate;
-
-import javax.mail.internet.MimeBodyPart;
-
-import org.junit.Test;
-
 import com.helger.as2lib.util.AS2Helper;
 import com.helger.as2lib.util.AS2HttpHelper;
 import com.helger.as2lib.util.cert.AS2KeyStoreHelper;
@@ -57,6 +41,20 @@ import com.helger.commons.io.stream.NonBlockingByteArrayOutputStream;
 import com.helger.mail.cte.EContentTransferEncoding;
 import com.helger.security.keystore.EKeyStoreType;
 import com.helger.security.keystore.KeyStoreHelper;
+import org.junit.Test;
+
+import javax.mail.internet.MimeBodyPart;
+import java.nio.charset.StandardCharsets;
+import java.security.GeneralSecurityException;
+import java.security.KeyStore;
+import java.security.KeyStore.PrivateKeyEntry;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
+
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Unit test class for class {@link BCCryptoHelper}.
@@ -118,17 +116,10 @@ public final class BCCryptoHelperTest
           assertNotNull (aContentTypes);
           assertEquals (1, aContentTypes.length);
           final String sContentType = aContentTypes[0];
-          if(eAlgo.getID().startsWith("rsassa-pss-")) {
-            final String sExpectedStart = "multipart/signed; protocol=\"application/pkcs7-signature\"; micalg=" +
-                    eAlgo.getID().replace("rsassa-pss-", "") +
-                    "; \r\n\tboundary=\"----=_Part";
-            assertTrue (sContentType + " does not start with " + sExpectedStart, sContentType.startsWith (sExpectedStart));
-          } else {
-            final String sExpectedStart = "multipart/signed; protocol=\"application/pkcs7-signature\"; micalg=" +
-                    eAlgo.getID() +
-                    "; \r\n\tboundary=\"----=_Part";
-            assertTrue (sContentType + " does not start with " + sExpectedStart, sContentType.startsWith (sExpectedStart));
-          }
+          final String sExpectedStart = "multipart/signed; protocol=\"application/pkcs7-signature\"; micalg=" +
+                  eAlgo.getID() +
+                  "; \r\n\tboundary=\"----=_Part";
+          assertTrue (sContentType + " does not start with " + sExpectedStart, sContentType.startsWith (sExpectedStart));
         }
   }
 

@@ -120,7 +120,7 @@ public enum ECryptoAlgorithmSign implements ICryptoAlgorithm
    * RSASSA-PSS<br>
    * Java devs didn't get the naming right in early Java 11 release and RSASSAPSS is correctly SHA256WITHRSAANDMGF1
    */
-  RSASSA_PSS_WITH_SHA256 ("rsassa-pss-sha-256",
+  RSASSA_PSS_WITH_SHA256 ("sha-256",
                                      NISTObjectIdentifiers.id_sha256,
                                    "SHA256WITHRSAANDMGF1");
 
