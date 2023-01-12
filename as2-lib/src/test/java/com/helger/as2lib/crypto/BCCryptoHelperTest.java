@@ -118,10 +118,17 @@ public final class BCCryptoHelperTest
           assertNotNull (aContentTypes);
           assertEquals (1, aContentTypes.length);
           final String sContentType = aContentTypes[0];
-          final String sExpectedStart = "multipart/signed; protocol=\"application/pkcs7-signature\"; micalg=" +
-                                        eAlgo.getID () +
-                                        "; \r\n\tboundary=\"----=_Part";
-          assertTrue (sContentType + " does not start with " + sExpectedStart, sContentType.startsWith (sExpectedStart));
+          if(eAlgo.getID().startsWith("rsassa-pss-")) {
+            final String sExpectedStart = "multipart/signed; protocol=\"application/pkcs7-signature\"; micalg=" +
+                    eAlgo.getID().replace("rsassa-pss-", "") +
+                    "; \r\n\tboundary=\"----=_Part";
+            assertTrue (sContentType + " does not start with " + sExpectedStart, sContentType.startsWith (sExpectedStart));
+          } else {
+            final String sExpectedStart = "multipart/signed; protocol=\"application/pkcs7-signature\"; micalg=" +
+                    eAlgo.getID() +
+                    "; \r\n\tboundary=\"----=_Part";
+            assertTrue (sContentType + " does not start with " + sExpectedStart, sContentType.startsWith (sExpectedStart));
+          }
         }
   }
 
