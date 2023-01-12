@@ -32,17 +32,16 @@
  */
 package com.helger.as2lib.crypto;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
+import com.helger.commons.annotation.DevelopersNote;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.lang.EnumHelper;
 import org.bouncycastle.asn1.ASN1ObjectIdentifier;
 import org.bouncycastle.asn1.nist.NISTObjectIdentifiers;
 import org.bouncycastle.asn1.oiw.OIWObjectIdentifiers;
 import org.bouncycastle.asn1.pkcs.PKCSObjectIdentifiers;
 
-import com.helger.commons.annotation.DevelopersNote;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.lang.EnumHelper;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * This enum contains all signing supported crypto algorithms. The algorithms
@@ -122,7 +121,7 @@ public enum ECryptoAlgorithmSign implements ICryptoAlgorithm
    * Java devs didn't get the naming right in early Java 11 release and RSASSAPSS is correctly SHA256WITHRSAANDMGF1
    */
   RSASSA_PSS_WITH_SHA256 ("rsassa-pss-sha-256",
-                                   PKCSObjectIdentifiers.id_RSASSA_PSS,
+                                     NISTObjectIdentifiers.id_sha256,
                                    "SHA256WITHRSAANDMGF1");
 
   public static final ECryptoAlgorithmSign DEFAULT_RFC_3851 = DIGEST_SHA1;
