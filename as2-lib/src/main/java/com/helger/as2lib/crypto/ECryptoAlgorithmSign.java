@@ -111,18 +111,25 @@ public enum ECryptoAlgorithmSign implements ICryptoAlgorithm
 
   /**
    * RSASSA pkcs1 v1.5 with sha3 256<br>
+   * Doesn't work with BC, SUN, SunRsaSign, SunEC, SunJSSE, SunJCE, SunJGSS, SunSASL, XMLDSig, SunPCSC, JdkLDAP, JdkSASL, SunPKCS11 crypto providers.
    */
   RSASSA_PKCS1_V1_5_WITH_SHA3_256 ("rsassa_pkcs1_v1_5_with_sha3_256",
                                    NISTObjectIdentifiers.id_rsassa_pkcs1_v1_5_with_sha3_256,
                                    "SHA3-256WITHRSA"),
 
   /**
-   * RSASSA-PSS<br>
-   * Java devs didn't get the naming right in early Java 11 release and RSASSAPSS is correctly SHA256WITHRSAANDMGF1
+   * RSASSA-PSS with SHA256
    */
-  RSASSA_PSS_WITH_SHA256 ("sha-256",
-                                     NISTObjectIdentifiers.id_sha256,
-                                   "SHA256WITHRSAANDMGF1");
+  RSASSA_PSS_WITH_SHA256 ("rsassa-pss-sha256",
+                                    NISTObjectIdentifiers.id_sha256,
+                                   "SHA256WITHRSAANDMGF1"),
+
+  /**
+   * RSASSA-PSS with SHA512
+   */
+  RSASSA_PSS_WITH_SHA512 ("rsassa-pss-sha512",
+                          NISTObjectIdentifiers.id_sha512,
+                                   "SHA512WITHRSAANDMGF1");
 
   public static final ECryptoAlgorithmSign DEFAULT_RFC_3851 = DIGEST_SHA1;
   public static final ECryptoAlgorithmSign DEFAULT_RFC_5751 = DIGEST_SHA_256;
@@ -195,7 +202,8 @@ public enum ECryptoAlgorithmSign implements ICryptoAlgorithm
            this == DIGEST_SHA_384 ||
            this == DIGEST_SHA_512 ||
            this == RSASSA_PKCS1_V1_5_WITH_SHA3_256 ||
-           this == RSASSA_PSS_WITH_SHA256;
+           this == RSASSA_PSS_WITH_SHA256 ||
+           this == RSASSA_PSS_WITH_SHA512;
   }
 
   @Nullable

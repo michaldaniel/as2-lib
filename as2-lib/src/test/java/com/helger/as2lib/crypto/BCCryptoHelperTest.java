@@ -99,7 +99,11 @@ public final class BCCryptoHelperTest
 
     for (int nIncludeCert = 0; nIncludeCert < 2; ++nIncludeCert)
       for (final ECryptoAlgorithmSign eAlgo : ECryptoAlgorithmSign.values ())
-        if (eAlgo != ECryptoAlgorithmSign.DIGEST_RSA_MD5 && eAlgo != ECryptoAlgorithmSign.DIGEST_RSA_SHA1 && eAlgo != ECryptoAlgorithmSign.RSASSA_PKCS1_V1_5_WITH_SHA3_256)
+        if (eAlgo != ECryptoAlgorithmSign.DIGEST_RSA_MD5
+                && eAlgo != ECryptoAlgorithmSign.DIGEST_RSA_SHA1
+                && eAlgo != ECryptoAlgorithmSign.RSASSA_PKCS1_V1_5_WITH_SHA3_256
+                && eAlgo != ECryptoAlgorithmSign.RSASSA_PSS_WITH_SHA256
+                && eAlgo != ECryptoAlgorithmSign.RSASSA_PSS_WITH_SHA512)
         {
           final MimeBodyPart aSigned = AS2Helper.getCryptoHelper ()
                                                 .sign (aPart,
@@ -116,10 +120,12 @@ public final class BCCryptoHelperTest
           assertNotNull (aContentTypes);
           assertEquals (1, aContentTypes.length);
           final String sContentType = aContentTypes[0];
+
           final String sExpectedStart = "multipart/signed; protocol=\"application/pkcs7-signature\"; micalg=" +
                   eAlgo.getID() +
                   "; \r\n\tboundary=\"----=_Part";
           assertTrue (sContentType + " does not start with " + sExpectedStart, sContentType.startsWith (sExpectedStart));
+
         }
   }
 
